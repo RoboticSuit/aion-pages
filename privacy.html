@@ -9,7 +9,8 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:#000;color:#3ef07a;font:16px/1.7 "Courier New",Consolas,monospace;overflow-x:hidden}
-canvas#rain{position:fixed;inset:0;z-index:0;opacity:.5}
+canvas#rain{position:fixed;inset:0;z-index:0;opacity:.4;filter:blur(2.5px) saturate(.9);transform:scale(1.02)}
+.vignette{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 35%,rgba(0,0,0,.55) 78%,rgba(0,0,0,.85) 100%)}
 main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:64px 20px 40px;min-height:100%}
 h1{font-size:1.6rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 24px;text-shadow:0 0 8px #3ef07a,0 0 18px #1a7a3e}
 h2{font-size:.95rem;font-style:italic;font-weight:normal;letter-spacing:.05em;color:#8ef0ad;margin-top:2rem;text-transform:uppercase}
@@ -22,6 +23,7 @@ footer{margin-top:56px;color:#2f8a55;font-size:.8rem;letter-spacing:.1em;text-tr
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
 <main>
 <h1>Notice</h1>
 <p>This instrument belongs to one keeper and answers to no other.</p>
