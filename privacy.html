@@ -5,14 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Epinoia &ndash; Notice</title>
 <style>
-body{font:16px/1.7 Georgia,"Times New Roman",serif;max-width:620px;margin:56px auto;padding:0 20px;color:#1c1c1c;background:#fbfaf7}
-h1{font-size:1.4rem}
-h2{font-size:1rem;font-style:italic;font-weight:normal;margin-top:2rem;color:#333}
-a{color:#3a4a6b}
-footer{margin-top:56px;color:#999;font-size:.82rem}
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#000;color:#3ef07a;font:16px/1.7 "Courier New",Consolas,monospace;overflow-x:hidden}
+canvas#rain{position:fixed;inset:0;z-index:0;opacity:.5}
+main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:64px 20px 40px;min-height:100%}
+h1{font-size:1.6rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 24px;text-shadow:0 0 8px #3ef07a,0 0 18px #1a7a3e}
+h2{font-size:.95rem;font-style:italic;font-weight:normal;letter-spacing:.05em;color:#8ef0ad;margin-top:2rem;text-transform:uppercase}
+p{color:#a9f7c2;text-shadow:0 0 3px rgba(62,240,122,.35)}
+a{color:#baffce;text-decoration:none;border-bottom:1px dashed #2f8a55}
+a:hover{color:#fff;border-bottom-color:#3ef07a}
+footer{margin-top:56px;color:#2f8a55;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+@media(prefers-reduced-motion:reduce){canvas#rain{display:none}}
 </style>
 </head>
 <body>
+<canvas id="rain" aria-hidden="true"></canvas>
+<main>
 <h1>Notice</h1>
 <p>This instrument belongs to one keeper and answers to no other.</p>
 
@@ -31,6 +41,42 @@ footer{margin-top:56px;color:#999;font-size:.82rem}
 <h2>To reach the keeper</h2>
 <p>There is one keeper, and one hand behind this notice.</p>
 
-<footer>Epinoia</footer>
+<footer><a href="index.html">Epinoia</a></footer>
+</main>
+<script>
+(function(){
+  try {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    var canvas = document.getElementById("rain");
+    var ctx = canvas.getContext("2d");
+    var glyphs = "01ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
+    var fontSize = 16, columns, drops;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = new Array(columns).fill(0).map(function () { return Math.random() * -50; });
+    }
+    window.addEventListener("resize", resize);
+    resize();
+    function frame() {
+      ctx.fillStyle = "rgba(0,0,0,0.06)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = fontSize + "px monospace";
+      for (var i = 0; i < columns; i++) {
+        var char = glyphs[Math.floor(Math.random() * glyphs.length)];
+        var y = drops[i] * fontSize;
+        ctx.fillStyle = "rgba(62,240,122," + (0.3 + Math.random() * 0.5) + ")";
+        ctx.fillText(char, i * fontSize, y);
+        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  } catch (e) { /* purely decorative: never block the page */ }
+})();
+</script>
 </body>
 </html>
