@@ -9,21 +9,20 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:#000;color:#3ef07a;font:16px/1.7 "Courier New",Consolas,monospace;overflow-x:hidden}
-canvas#rain{position:fixed;inset:0;z-index:0;opacity:.22;filter:blur(1.5px) saturate(.8);transform:scale(1.02)}
-.vignette{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 45%,rgba(0,0,0,.3) 82%,rgba(0,0,0,.5) 100%)}
-main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:64px 20px 40px;min-height:100%}
+canvas#rain{position:fixed;inset:0;z-index:0;opacity:.55}
+main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:40px 36px;min-height:calc(100% - 128px);top:64px;background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
 h1{font-size:1.9rem;letter-spacing:.15em;text-transform:uppercase;margin:0 0 4px;text-shadow:0 0 8px #3ef07a,0 0 18px #1a7a3e}
 .sub{color:#8ef0ad;font-style:italic;margin:0 0 28px;opacity:.85}
 p{color:#a9f7c2;text-shadow:0 0 3px rgba(62,240,122,.35)}
 a{color:#baffce;text-decoration:none;border-bottom:1px dashed #2f8a55}
 a:hover{color:#fff;border-bottom-color:#3ef07a}
-footer{margin-top:56px;color:#2f8a55;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+footer{margin-top:40px;color:#9fe8b6;font-size:.92rem;line-height:1.6;letter-spacing:.02em}
+footer a{color:#c9ffda;border-bottom-color:#4fae74}
 @media(prefers-reduced-motion:reduce){canvas#rain{display:none}}
 </style>
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas>
-<div class="vignette" aria-hidden="true"></div>
 <main>
 <h1>Aion</h1>
 <p class="sub">A private working instrument, tended within one household.</p>
