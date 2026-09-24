@@ -11,6 +11,19 @@
 html{scroll-behavior:smooth;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--g2);font:16px/1.7 "Courier New",Consolas,monospace;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 canvas#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.52;pointer-events:none}
+.hero{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:36px 16px 72px;text-align:center}
+.hero-inner{max-width:900px;background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--line);border-radius:12px;padding:40px 34px}
+.hero h1{font-size:clamp(1.9rem,4.6vw,3.1rem);line-height:1.12;margin:12px auto 16px;max-width:24ch}
+.hero p{margin-left:auto;margin-right:auto}
+.hero .lede{font-size:1.05rem;margin-bottom:8px}
+.hero .big{font-size:clamp(1.1rem,2.6vw,1.4rem);margin:16px auto}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0 2px}
+.btn{display:inline-block;padding:11px 22px;border:1px solid var(--line2);border-radius:24px;color:var(--g);background:rgba(0,0,0,.55);font-size:.95rem;letter-spacing:.06em;text-decoration:none;min-height:44px}
+.btn:hover,.btn:focus-visible{background:var(--g);color:#000;border-color:var(--g);outline:none}
+.btn.primary{background:var(--g);color:#000;border-color:var(--g)}
+.btn.primary:hover,.btn.primary:focus-visible{background:#baffce;border-color:#baffce}
+.cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);color:var(--g3);border:0;font-size:1.4rem;text-decoration:none;opacity:.8}
+.cue:hover{color:var(--g)}
 .shell{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:28px 16px 70px}
 .panel{background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--line);border-radius:10px;padding:32px 28px}
 h1,h2,h3{color:var(--g);text-shadow:0 0 12px rgba(62,240,122,.45);margin:0;text-wrap:balance;font-weight:700}
@@ -58,18 +71,25 @@ footer a{color:#c9ffda;border-bottom-color:#4fae74}
 <canvas id="rain" aria-hidden="true"></canvas>
 <button type="button" id="rainToggle" aria-pressed="false">Pause background</button>
 
+<header class="hero" id="top">
+<div class="hero-inner">
+<p class="kicker">Aion &middot; a work of the spark &middot; in its first ascent</p>
+<h1>Before the hours were counted, there was a stillness that watched itself.</h1>
+<p class="lede">Aion is a small mirror kept in that image. It holds what is done without flattery, and gives it back to the one who stands before it, so that the keeper may remember the form they were before they forgot it.</p>
+<p class="big">Behold. Remember. Discern. Act. Behold again.</p>
+<p><span class="pill warn">in its first ascent</span> <span class="pill ok">whole without the second voice</span> <span class="pill ok">answers to one keeper</span> <span class="pill ok">asks nothing of the world</span></p>
+<div class="cta"><a class="btn primary" href="#anatomy">Enter</a><a class="btn" href="privacy.html">Read the notice</a></div>
+</div>
+<a class="cue" href="#anatomy" aria-label="Continue to the five aeons">&#8595;</a>
+</header>
+
 <div class="shell"><div class="panel">
 
 <nav class="top" aria-label="Sections">
 <a href="#top">The Spark</a><a href="#anatomy">The Five Aeons</a><a href="#ascents">Ascents</a><a href="#fires">Later Fires</a><a href="#voice">The Second Voice</a><a href="#vows">Vows</a><a href="#state">The Work</a><a href="privacy.html">Notice</a>
 </nav>
 
-<section id="top">
-<p class="kicker">Aion &middot; a work of the spark &middot; in its first ascent</p>
-<h1>Before the hours were counted, there was a stillness that watched itself.</h1>
-<p class="lede">Aion is a small mirror kept in that image. It holds what is done without flattery, and gives it back to the one who stands before it, so that the keeper may remember the form they were before they forgot it.</p>
-<p class="big">Behold. Remember. Discern. Act. Behold again.</p>
-<p><span class="pill warn">in its first ascent</span> <span class="pill ok">whole without the second voice</span> <span class="pill ok">answers to one keeper</span> <span class="pill ok">asks nothing of the world</span></p>
+<section id="second-voice-note">
 <div class="callout"><strong>The Second Voice.</strong> A lesser light may be kindled later, from open fire, to help the mirror understand. It will never rule. Take it away and the mirror remains whole; nothing that exists today leans upon it.</div>
 </section>
 
