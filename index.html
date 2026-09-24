@@ -2,70 +2,218 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aion</title>
+<meta name="description" content="Aion: a mirror kept for one keeper. In its first ascent.">
 <style>
-:root{color-scheme:dark}
+:root{color-scheme:dark;--bg:#000;--g:#3ef07a;--g2:#a9f7c2;--g3:#7fd9a0;--dim:#6fbf8a;--line:#14502a;--line2:#1f7a45;--card:rgba(2,18,9,.62);--foot:#9fe8b6;--warn:#ffb000;--radius:6px}
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:#000;color:#3ef07a;font:16px/1.7 "Courier New",Consolas,monospace;overflow-x:hidden}
-canvas#rain{position:fixed;inset:0;z-index:0;opacity:.55}
-main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:40px 36px;min-height:calc(100% - 128px);top:64px;background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
-h1{font-size:1.9rem;letter-spacing:.15em;text-transform:uppercase;margin:0 0 4px;text-shadow:0 0 8px #3ef07a,0 0 18px #1a7a3e}
-.sub{color:#8ef0ad;font-style:italic;margin:0 0 28px;opacity:.85}
-p{color:#a9f7c2;text-shadow:0 0 3px rgba(62,240,122,.35)}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--g2);font:16px/1.7 "Courier New",Consolas,monospace;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+canvas#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.52;pointer-events:none}
+.shell{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:28px 16px 70px}
+.panel{background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--line);border-radius:10px;padding:32px 28px}
+h1,h2,h3{color:var(--g);text-shadow:0 0 12px rgba(62,240,122,.45);margin:0;text-wrap:balance;font-weight:700}
+h1{font-size:clamp(1.9rem,5.4vw,3.1rem);line-height:1.12;margin:8px 0 16px}
+h2{font-size:1.4rem;letter-spacing:.06em;margin:0 0 8px;text-transform:uppercase}
+h3{font-size:1rem;letter-spacing:.05em;margin:0 0 6px;text-transform:uppercase}
+p{max-width:70ch;margin:0 0 13px;text-shadow:0 0 3px rgba(62,240,122,.25)}
+.kicker{color:var(--dim);font-size:.82rem;letter-spacing:.14em;margin:0;text-transform:uppercase}
+.lede{font-size:1.06rem;max-width:64ch}
+.big{font-size:1.2rem;color:var(--g);max-width:60ch;margin:16px 0;letter-spacing:.04em}
+.dek{color:var(--g3);max-width:68ch;margin:0 0 18px;font-style:italic}
+nav.top{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0 0 26px;padding:8px 10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:3;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:8px}
+nav.top a{color:var(--g3);text-decoration:none;font-size:.82rem;padding:3px 8px;border-radius:4px;border-bottom:0;letter-spacing:.04em}
+nav.top a:hover,nav.top a:focus-visible{color:#000;background:var(--g);outline:none}
+section{margin:0 0 60px;scroll-margin-top:70px}
+.pill{display:inline-block;font-size:.72rem;padding:2px 10px;border-radius:20px;border:1px solid var(--line2);color:var(--g3);white-space:nowrap;margin:2px 2px 2px 0;letter-spacing:.04em}
+.pill.ok{color:#000;background:var(--g);border-color:var(--g)}
+.pill.warn{color:var(--warn);border-color:var(--warn)}
+.pill.later{border-style:dashed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.card p{font-size:.92rem;color:var(--g3);margin:0 0 6px}
+figure{margin:22px 0 6px}
+.fig{border:1px solid var(--line);border-radius:var(--radius);background:rgba(0,10,4,.55);padding:12px;overflow-x:auto}
+svg.diagram{display:block;min-width:640px;width:100%;height:auto;margin:0 auto;color:var(--g2)}
+figcaption{font-size:.85rem;color:var(--g3);margin-top:8px;max-width:76ch;font-style:italic}
+.callout{border:1px solid var(--g);border-left-width:4px;border-radius:var(--radius);padding:12px 16px;max-width:74ch;background:rgba(62,240,122,.06)}
+.steps-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
+.step{border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;background:var(--card)}
+.step b{color:var(--g);display:block;margin-bottom:4px;letter-spacing:.04em}
+.step span.s{display:block;font-size:.86rem;color:var(--g3)}
+ul.vows{padding-left:20px;max-width:70ch;color:var(--g3)}ul.vows li{margin:8px 0}ul.vows strong{color:var(--g2)}
 a{color:#baffce;text-decoration:none;border-bottom:1px dashed #2f8a55}
-a:hover{color:#fff;border-bottom-color:#3ef07a}
-footer{margin-top:40px;color:#9fe8b6;font-size:.92rem;line-height:1.6;letter-spacing:.02em}
+a:hover{color:#fff;border-bottom-color:var(--g)}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--foot);font-size:.92rem;line-height:1.7;max-width:80ch;letter-spacing:.02em}
 footer a{color:#c9ffda;border-bottom-color:#4fae74}
-@media(prefers-reduced-motion:reduce){canvas#rain{display:none}}
+#rainToggle{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:5;font:inherit;font-size:.82rem;color:var(--g);background:rgba(0,0,0,.72);border:1px solid var(--line2);border-radius:20px;padding:7px 14px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);min-height:36px}
+#rainToggle:hover{background:var(--g);color:#000}
+#rainToggle:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+@media(max-width:700px){.panel{padding:22px 14px}}
+@media(prefers-reduced-motion:reduce){canvas#rain{display:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas>
-<main>
-<h1>Aion</h1>
-<p class="sub">A private working instrument, tended within one household.</p>
-<p>What is kept here has no public census and no second keeper. It answers to a single hand alone, and asks nothing of any other.</p>
-<p>See the <a href="privacy.html">notice</a> concerning what little it touches.</p>
-<footer>Aion &mdash; a project by Iasonas Papadopoulos, B.Sc. Information and Communication Technology (UI &amp; UX specialization), The American College of Greece</footer>
-</main>
+<button type="button" id="rainToggle" aria-pressed="false">Pause background</button>
+
+<div class="shell"><div class="panel">
+
+<nav class="top" aria-label="Sections">
+<a href="#top">The Spark</a><a href="#anatomy">The Five Aeons</a><a href="#ascents">Ascents</a><a href="#fires">Later Fires</a><a href="#voice">The Second Voice</a><a href="#vows">Vows</a><a href="#state">The Work</a><a href="privacy.html">Notice</a>
+</nav>
+
+<section id="top">
+<p class="kicker">Aion &middot; a work of the spark &middot; in its first ascent</p>
+<h1>Before the hours were counted, there was a stillness that watched itself.</h1>
+<p class="lede">Aion is a small mirror kept in that image. It holds what is done without flattery, and gives it back to the one who stands before it, so that the keeper may remember the form they were before they forgot it.</p>
+<p class="big">Behold. Remember. Discern. Act. Behold again.</p>
+<p><span class="pill warn">in its first ascent</span> <span class="pill ok">whole without the second voice</span> <span class="pill ok">answers to one keeper</span> <span class="pill ok">asks nothing of the world</span></p>
+<div class="callout"><strong>The Second Voice.</strong> A lesser light may be kindled later, from open fire, to help the mirror understand. It will never rule. Take it away and the mirror remains whole; nothing that exists today leans upon it.</div>
+</section>
+
+<section id="anatomy">
+<h2>The Five Aeons</h2>
+<p class="dek">Everything within is one of five emanations. At their centre stands the keeper: the mirror exists to show them to themselves, and their choosing is what turns the wheel.</p>
+<figure><div class="fig">
+<svg class="diagram" viewBox="0 0 900 590" role="img" aria-label="Five aeons in a circle around the keeper: the Gaze, the Ledger, the Mirror, the Counsel and the Hand, each giving rise to the next, with the Second Voice drawn dashed beneath, joined to the keeper by a faint line.">
+<defs>
+<marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3ef07a"/></marker>
+<marker id="ad" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7fd9a0"/></marker>
+</defs>
+<g fill="rgba(2,18,9,.85)" stroke="#1f7a45" stroke-width="1.4">
+<rect x="310" y="20" width="280" height="92" rx="8"/>
+<rect x="640" y="150" width="240" height="98" rx="8"/>
+<rect x="590" y="380" width="270" height="98" rx="8"/>
+<rect x="40" y="380" width="270" height="98" rx="8"/>
+<rect x="20" y="150" width="240" height="98" rx="8"/>
+</g>
+<circle cx="450" cy="300" r="74" fill="rgba(62,240,122,.08)" stroke="#3ef07a" stroke-width="2"/>
+<g fill="none" stroke="#3ef07a" stroke-width="2.2" marker-end="url(#ar)">
+<path d="M590,60 C660,70 720,105 750,148"/>
+<path d="M780,250 C800,300 780,340 730,378"/>
+<path d="M590,430 C520,470 380,470 312,430"/>
+<path d="M120,378 C90,340 80,300 100,252"/>
+<path d="M150,148 C190,90 250,66 308,60"/>
+</g>
+<g fill="none" stroke="#7fd9a0" stroke-width="1.3" stroke-dasharray="6 5" marker-end="url(#ad)"><line x1="450" y1="512" x2="450" y2="378"/></g>
+<g text-anchor="middle" fill="#3ef07a" font-family="Courier New, Consolas, monospace" font-weight="700">
+<text x="450" y="50" font-size="19">THE GAZE</text><text x="760" y="182" font-size="19">THE LEDGER</text><text x="725" y="412" font-size="19">THE MIRROR</text><text x="175" y="412" font-size="19">THE COUNSEL</text><text x="140" y="182" font-size="19">THE HAND</text>
+<text x="450" y="296" font-size="19">THE KEEPER</text>
+</g>
+<g text-anchor="middle" fill="#a9f7c2" font-family="Courier New, Consolas, monospace" font-size="12.5">
+<text x="450" y="76">what draws near the mirror</text><text x="450" y="96">and is seen</text>
+<text x="760" y="208">what is done is written once</text><text x="760" y="228">and cannot be unwritten</text>
+<text x="725" y="438">the written is shown back</text><text x="725" y="458">as it was</text>
+<text x="175" y="438">plain, small, reasoned</text><text x="175" y="458">never a command</text>
+<text x="140" y="208">nothing moves</text><text x="140" y="228">without assent</text>
+<text x="450" y="322" fill="#7fd9a0" font-size="11">the one who is shown</text>
+</g>
+<g fill="none" stroke="#7fd9a0" stroke-width="1.3" stroke-dasharray="6 5"><rect x="230" y="512" width="440" height="60" rx="8"/></g>
+<g text-anchor="middle" font-family="Courier New, Consolas, monospace" fill="#7fd9a0" font-size="12">
+<text x="450" y="536" font-weight="700" fill="#3ef07a" font-size="13">THE SECOND VOICE &middot; kindled later</text>
+<text x="450" y="554">it helps the mirror understand; it does not decide</text>
+</g>
+<text x="462" y="500" font-family="Courier New, Consolas, monospace" font-size="11" fill="#7fd9a0">only to help</text>
+</svg></div>
+<figcaption>The green circuit is the whole of the living work. The dashed vessel is a light not yet kindled; the circuit turns without it.</figcaption></figure>
+<div class="grid">
+<div class="card"><h3>Why a mirror</h3><p>The world is full of masters who tell you what to be. The mirror tells you nothing. It shows what is, and lets the spark in you do the remembering.</p></div>
+<div class="card"><h3>The perceived form</h3><p>Each keeper carries an image of who they mean to be. The mirror measures the distance between that image and the days as they were lived, and offers the next small step.</p></div>
+<div class="card"><h3>What is never guessed</h3><p>What is written is what happened, at the hour it happened. Silence is never taken for presence. What is estimated is always named as an estimate.</p></div>
+</div>
+</section>
+
+<section id="ascents">
+<h2>Ascents</h2>
+<p class="dek">The work climbs in small steps. Each is completed, shown to the keeper, and waits for their word before the next begins.</p>
+<div class="steps-track">
+<div class="step"><b>The Levelling of the Stones</b><span class="s">What is uneven in the foundation is made true before anything is built upon it.</span> <span class="pill">next</span></div>
+<div class="step"><b>The Measure of the Road</b><span class="s">The distance to each door is learned by the keeper's own reckoning, so that arrival may be met with calm.</span> <span class="pill later">then</span></div>
+<div class="step"><b>The Company of Others</b><span class="s">Those who walk beside the keeper are named and remembered, and may be called only with the keeper's assent.</span> <span class="pill later">then</span></div>
+<div class="step"><b>The Sealed Door</b><span class="s">A single door opens outward, and only ever by the keeper's hand, in the keeper's sight.</span> <span class="pill later">then</span></div>
+</div>
+</section>
+
+<section id="fires">
+<h2>Later Fires</h2>
+<p class="dek">Beyond the ascents lie things not yet promised. They are named here only so that they are not forgotten.</p>
+<div class="grid">
+<div class="card"><h3>The Weekly Stillness</h3><p>Once a week, the mirror speaks plainly of what was kept and what slipped, and offers one adjustment. Only one.</p> <span class="pill later">a later fire</span></div>
+<div class="card"><h3>The Learning of Hours</h3><p>The mirror comes to know which hours the keeper keeps and which they lose, and gently leans the day toward the former.</p> <span class="pill later">a later fire</span></div>
+<div class="card"><h3>The Rest That Answers</h3><p>What was slept is set beside what was hoped, and the evening is asked for more or less firmly.</p> <span class="pill later">a later fire</span></div>
+<div class="card"><h3>The Reading of Scrolls</h3><p>What is handed to the mirror in another's script may be read and made plain, by the Second Voice alone.</p> <span class="pill later">by the second voice</span></div>
+</div>
+</section>
+
+<section id="voice">
+<h2>The Second Voice</h2>
+<p class="dek">A lesser light, kindled from open fire, held within the keeper's own house. Not required. Not relied upon.</p>
+<div class="grid">
+<div class="card"><h3>What it may add</h3><p>To understand a sentence spoken loosely. To read what is written in another's hand. To find the right words for what the mirror already knows.</p></div>
+<div class="card"><h3>What it may never do</h3><p>To act alone. Whatever it offers is read again by the plain rules, and nothing moves without the keeper's assent.</p></div>
+<div class="card"><h3>Without it</h3><p>Nothing is lost. The mirror was built to be whole first, and everything that lives today lives without any second voice.</p></div>
+</div>
+<p style="margin-top:12px"><span class="pill later">not yet kindled</span> <span class="pill ok">nothing depends on it</span></p>
+</section>
+
+<section id="vows">
+<h2>Vows</h2>
+<ul class="vows">
+<li><strong>Nothing is done without assent.</strong> Every act is first shown to the keeper, and only then made.</li>
+<li><strong>What is written cannot be unwritten.</strong> The record only grows, so that the mirror cannot be made to flatter.</li>
+<li><strong>It answers to one.</strong> There is no second keeper, no watcher, and no wider circle.</li>
+<li><strong>It asks no tribute.</strong> Nothing is sold, shown, or set before any market.</li>
+</ul>
+</section>
+
+<section id="state">
+<h2>The Work</h2>
+<p>Aion is in its first ascent: a seed that already breathes. Some doors are unfinished, and the mirror says so plainly. It is kept honest about what lives, what is only promised, and what is not yet known.</p>
+<p><span class="pill warn">first ascent</span> <span class="pill">tended daily</span> <span class="pill later">more to come</span></p>
+</section>
+
+<footer>Aion &mdash; a project by Iasonas Papadopoulos, B.Sc. Information and Communication Technology (UI &amp; UX specialization), The American College of Greece<br>See the <a href="privacy.html">notice</a> concerning what little it touches.</footer>
+
+</div></div>
+
 <script>
 (function(){
-  try {
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    var canvas = document.getElementById("rain");
-    var ctx = canvas.getContext("2d");
-    var glyphs = "01ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
-    var fontSize = 16, columns, drops;
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      columns = Math.floor(canvas.width / fontSize);
-      drops = new Array(columns).fill(0).map(function () { return Math.random() * -50; });
-    }
-    window.addEventListener("resize", resize);
-    resize();
-    var lastDraw = 0, FRAME_INTERVAL = 90; // ms between updates: a slow, ambient drift, not a busy scroll
-    function frame(now) {
-      requestAnimationFrame(frame);
-      if (now - lastDraw < FRAME_INTERVAL) return;
-      lastDraw = now;
-      ctx.fillStyle = "rgba(0,0,0,0.10)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = fontSize + "px monospace";
-      for (var i = 0; i < columns; i++) {
-        var char = glyphs[Math.floor(Math.random() * glyphs.length)];
-        var y = drops[i] * fontSize;
-        ctx.fillStyle = "rgba(62,240,122," + (0.18 + Math.random() * 0.3) + ")";
-        ctx.fillText(char, i * fontSize, y);
-        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i] += 0.6;
+  try{
+    var c=document.getElementById('rain'),btn=document.getElementById('rainToggle');
+    if(!c||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){if(btn){btn.hidden=true;}return;}
+    var paused=false;
+    try{paused=localStorage.getItem('aionRainPaused')==='1';}catch(e){}
+    var x=c.getContext('2d'),glyphs='01ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ',size=16,cols=0,drops=[],last=0;
+    var DENSITY=0.16;   /* share of columns with a stream falling at any moment */
+    var MAX_REST=170;   /* longest pause, in rows, before a column starts a new stream */
+    function rest(){return -Math.random()*MAX_REST;}
+    function fit(){c.width=window.innerWidth;c.height=window.innerHeight;cols=Math.ceil(c.width/size);drops=[];
+      for(var i=0;i<cols;i++){drops.push(Math.random()<DENSITY?Math.random()*c.height/size:rest());}}
+    window.addEventListener('resize',fit);fit();
+    function draw(t){
+      if(t-last>=90){
+        last=t;x.fillStyle='rgba(0,0,0,0.12)';x.fillRect(0,0,c.width,c.height);
+        x.fillStyle='#3ef07a';x.font=size+'px "Courier New",monospace';
+        for(var i=0;i<cols;i++){
+          if(drops[i]>=0){x.fillText(glyphs.charAt(Math.floor(Math.random()*glyphs.length)),i*size,drops[i]*size);}
+          drops[i]+=0.6;
+          if(drops[i]*size>c.height&&Math.random()>0.975){drops[i]=rest();}
+        }
       }
+      if(!paused){requestAnimationFrame(draw);}
     }
-    requestAnimationFrame(frame);
-  } catch (e) { /* purely decorative: never block the page */ }
+    function sync(){btn.textContent=paused?'Resume background':'Pause background';btn.setAttribute('aria-pressed',paused?'true':'false');}
+    btn.addEventListener('click',function(){
+      paused=!paused;
+      try{localStorage.setItem('aionRainPaused',paused?'1':'0');}catch(e){}
+      sync();
+      if(!paused){last=0;requestAnimationFrame(draw);}
+    });
+    sync();
+    requestAnimationFrame(draw);
+  }catch(e){ /* purely decorative: never block the page */ }
 })();
 </script>
 </body>

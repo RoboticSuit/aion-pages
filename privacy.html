@@ -2,28 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aion &ndash; Notice</title>
+<meta name="description" content="The notice concerning what Aion touches, and what becomes of it.">
 <style>
-:root{color-scheme:dark}
+:root{color-scheme:dark;--bg:#000;--g:#3ef07a;--g2:#a9f7c2;--g3:#7fd9a0;--dim:#6fbf8a;--line:#14502a;--line2:#1f7a45;--foot:#9fe8b6;--radius:6px}
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:#000;color:#3ef07a;font:16px/1.7 "Courier New",Consolas,monospace;overflow-x:hidden}
-canvas#rain{position:fixed;inset:0;z-index:0;opacity:.55}
-main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:40px 36px;min-height:calc(100% - 128px);top:64px;background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
-h1{font-size:1.6rem;letter-spacing:.12em;text-transform:uppercase;margin:0 0 24px;text-shadow:0 0 8px #3ef07a,0 0 18px #1a7a3e}
-h2{font-size:.95rem;font-style:italic;font-weight:normal;letter-spacing:.05em;color:#8ef0ad;margin-top:2rem;text-transform:uppercase}
-p{color:#a9f7c2;text-shadow:0 0 3px rgba(62,240,122,.35)}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--g2);font:16px/1.7 "Courier New",Consolas,monospace;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+canvas#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.52;pointer-events:none}
+.shell{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:28px 16px 70px}
+.panel{background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--line);border-radius:10px;padding:32px 28px}
+h1,h2{color:var(--g);text-shadow:0 0 12px rgba(62,240,122,.45);margin:0;text-wrap:balance;font-weight:700}
+h1{font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:.12em;text-transform:uppercase;margin:6px 0 18px}
+h2{font-size:.95rem;font-weight:400;font-style:italic;letter-spacing:.06em;color:#8ef0ad;margin:30px 0 6px;text-transform:uppercase;text-shadow:none}
+p{max-width:68ch;margin:0 0 13px;text-shadow:0 0 3px rgba(62,240,122,.25)}
+.kicker{color:var(--dim);font-size:.82rem;letter-spacing:.14em;margin:0;text-transform:uppercase}
+.plain{border:1px solid var(--line2);border-left-width:4px;border-radius:var(--radius);padding:14px 18px;background:rgba(62,240,122,.05);margin-top:34px;max-width:70ch}
+.plain h2{margin-top:0}
+.plain p{font-size:.94rem}
 a{color:#baffce;text-decoration:none;border-bottom:1px dashed #2f8a55}
-a:hover{color:#fff;border-bottom-color:#3ef07a}
-footer{margin-top:40px;color:#9fe8b6;font-size:.92rem;line-height:1.6;letter-spacing:.02em}
+a:hover{color:#fff;border-bottom-color:var(--g)}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--foot);font-size:.92rem;line-height:1.7;max-width:80ch;letter-spacing:.02em}
 footer a{color:#c9ffda;border-bottom-color:#4fae74}
-@media(prefers-reduced-motion:reduce){canvas#rain{display:none}}
+#rainToggle{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:5;font:inherit;font-size:.82rem;color:var(--g);background:rgba(0,0,0,.72);border:1px solid var(--line2);border-radius:20px;padding:7px 14px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);min-height:36px}
+#rainToggle:hover{background:var(--g);color:#000}
+#rainToggle:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+@media(max-width:700px){.panel{padding:22px 14px}}
+@media(prefers-reduced-motion:reduce){canvas#rain{display:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <canvas id="rain" aria-hidden="true"></canvas>
-<main>
+<button type="button" id="rainToggle" aria-pressed="false">Pause background</button>
+
+<div class="shell"><div class="panel">
+<p class="kicker"><a href="index.html">Aion</a> &middot; the notice</p>
 <h1>Notice</h1>
 <p>This instrument belongs to one keeper and answers to no other.</p>
 
@@ -42,44 +56,53 @@ footer a{color:#c9ffda;border-bottom-color:#4fae74}
 <h2>To reach the keeper</h2>
 <p>There is one keeper, and one hand behind this notice.</p>
 
+<div class="plain">
+<h2>In plain words, for the record</h2>
+<p>When the keeper links a Google account, Aion reads and changes only the calendar entries and task items the keeper directs it to, and only in order to do what the keeper has asked.</p>
+<p>That information is not sold, shared, published, used for advertising, or used to train any model, and no person reads it. It is kept only in the keeper's own storage.</p>
+<p>The keeper can end this access at any time from the permissions page of their Google account, which removes it.</p>
+<p>Aion's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+</div>
+
 <footer><a href="index.html">Aion</a> &mdash; a project by Iasonas Papadopoulos, B.Sc. Information and Communication Technology (UI &amp; UX specialization), The American College of Greece</footer>
-</main>
+</div></div>
+
 <script>
 (function(){
-  try {
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    var canvas = document.getElementById("rain");
-    var ctx = canvas.getContext("2d");
-    var glyphs = "01ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
-    var fontSize = 16, columns, drops;
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      columns = Math.floor(canvas.width / fontSize);
-      drops = new Array(columns).fill(0).map(function () { return Math.random() * -50; });
-    }
-    window.addEventListener("resize", resize);
-    resize();
-    var lastDraw = 0, FRAME_INTERVAL = 90; // ms between updates: a slow, ambient drift, not a busy scroll
-    function frame(now) {
-      requestAnimationFrame(frame);
-      if (now - lastDraw < FRAME_INTERVAL) return;
-      lastDraw = now;
-      ctx.fillStyle = "rgba(0,0,0,0.10)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = fontSize + "px monospace";
-      for (var i = 0; i < columns; i++) {
-        var char = glyphs[Math.floor(Math.random() * glyphs.length)];
-        var y = drops[i] * fontSize;
-        ctx.fillStyle = "rgba(62,240,122," + (0.18 + Math.random() * 0.3) + ")";
-        ctx.fillText(char, i * fontSize, y);
-        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i] += 0.6;
+  try{
+    var c=document.getElementById('rain'),btn=document.getElementById('rainToggle');
+    if(!c||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){if(btn){btn.hidden=true;}return;}
+    var paused=false;
+    try{paused=localStorage.getItem('aionRainPaused')==='1';}catch(e){}
+    var x=c.getContext('2d'),glyphs='01ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ',size=16,cols=0,drops=[],last=0;
+    var DENSITY=0.16;
+    var MAX_REST=170;
+    function rest(){return -Math.random()*MAX_REST;}
+    function fit(){c.width=window.innerWidth;c.height=window.innerHeight;cols=Math.ceil(c.width/size);drops=[];
+      for(var i=0;i<cols;i++){drops.push(Math.random()<DENSITY?Math.random()*c.height/size:rest());}}
+    window.addEventListener('resize',fit);fit();
+    function draw(t){
+      if(t-last>=90){
+        last=t;x.fillStyle='rgba(0,0,0,0.12)';x.fillRect(0,0,c.width,c.height);
+        x.fillStyle='#3ef07a';x.font=size+'px "Courier New",monospace';
+        for(var i=0;i<cols;i++){
+          if(drops[i]>=0){x.fillText(glyphs.charAt(Math.floor(Math.random()*glyphs.length)),i*size,drops[i]*size);}
+          drops[i]+=0.6;
+          if(drops[i]*size>c.height&&Math.random()>0.975){drops[i]=rest();}
+        }
       }
+      if(!paused){requestAnimationFrame(draw);}
     }
-    requestAnimationFrame(frame);
-  } catch (e) { /* purely decorative: never block the page */ }
+    function sync(){btn.textContent=paused?'Resume background':'Pause background';btn.setAttribute('aria-pressed',paused?'true':'false');}
+    btn.addEventListener('click',function(){
+      paused=!paused;
+      try{localStorage.setItem('aionRainPaused',paused?'1':'0');}catch(e){}
+      sync();
+      if(!paused){last=0;requestAnimationFrame(draw);}
+    });
+    sync();
+    requestAnimationFrame(draw);
+  }catch(e){ /* purely decorative: never block the page */ }
 })();
 </script>
 </body>
