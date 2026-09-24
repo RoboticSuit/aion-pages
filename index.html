@@ -11,7 +11,7 @@
 html{scroll-behavior:smooth;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--g2);font:16px/1.7 "Courier New",Consolas,monospace;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 canvas#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.52;pointer-events:none}
-.hero{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:36px 16px 72px;text-align:center}
+.hero{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;margin:0;padding:84px 16px 72px;text-align:center}
 .hero-inner{max-width:900px;background:rgba(0,0,0,.42);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid var(--line);border-radius:12px;padding:40px 34px}
 .hero h1{font-size:clamp(1.9rem,4.6vw,3.1rem);line-height:1.12;margin:12px auto 16px;max-width:24ch}
 .hero p{margin-left:auto;margin-right:auto}
@@ -35,10 +35,24 @@ p{max-width:70ch;margin:0 0 13px;text-shadow:0 0 3px rgba(62,240,122,.25)}
 .lede{font-size:1.06rem;max-width:64ch}
 .big{font-size:1.2rem;color:var(--g);max-width:60ch;margin:16px 0;letter-spacing:.04em}
 .dek{color:var(--g3);max-width:68ch;margin:0 0 18px;font-style:italic}
-nav.top{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0 0 26px;padding:8px 10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:3;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:8px}
-nav.top a{color:var(--g3);text-decoration:none;font-size:.82rem;padding:3px 8px;border-radius:4px;border-bottom:0;letter-spacing:.04em}
-nav.top a:hover,nav.top a:focus-visible{color:#000;background:var(--g);outline:none}
-section{margin:0 0 60px;scroll-margin-top:70px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(18px,env(safe-area-inset-right,0px)) 10px max(18px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
+.bar.solid,.bar.open{background:rgba(0,0,0,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom-color:var(--line)}
+.mark{color:var(--g);font-weight:700;letter-spacing:.32em;text-decoration:none;border:0;text-shadow:0 0 10px rgba(62,240,122,.55)}
+.mark:hover{color:#baffce}
+.links{display:flex;align-items:center;gap:2px 4px}
+.links a{color:var(--g3);border:0;text-decoration:none;font-size:.8rem;letter-spacing:.07em;padding:6px 11px;border-radius:16px;white-space:nowrap}
+.links a:hover,.links a:focus-visible,.links a.on{color:#000;background:var(--g);outline:none}
+.links a.notice{border:1px solid var(--line2);margin-left:6px}
+.menu{display:none;font:inherit;font-size:.8rem;letter-spacing:.07em;color:var(--g);background:transparent;border:1px solid var(--line2);border-radius:16px;padding:6px 14px;cursor:pointer;min-height:36px}
+.menu:hover,.menu:focus-visible{background:var(--g);color:#000;outline:none}
+@media(max-width:860px){
+  .menu{display:inline-block}
+  .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;background:rgba(0,0,0,.94);border-bottom:1px solid var(--line);padding:8px max(18px,env(safe-area-inset-right,0px)) 14px max(18px,env(safe-area-inset-left,0px))}
+  .bar.open .links{display:flex}
+  .links a{padding:13px 12px;border-radius:6px;font-size:.9rem}
+  .links a.notice{margin:6px 0 0;text-align:center}
+}
+section{margin:0 0 60px;scroll-margin-top:64px}
 .pill{display:inline-block;font-size:.72rem;padding:2px 10px;border-radius:20px;border:1px solid var(--line2);color:var(--g3);white-space:nowrap;margin:2px 2px 2px 0;letter-spacing:.04em}
 .pill.ok{color:#000;background:var(--g);border-color:var(--g)}
 .pill.warn{color:var(--warn);border-color:var(--warn)}
@@ -71,7 +85,15 @@ footer a{color:#c9ffda;border-bottom-color:#4fae74}
 <canvas id="rain" aria-hidden="true"></canvas>
 <button type="button" id="rainToggle" aria-pressed="false">Pause background</button>
 
-<header class="hero" id="top">
+<header class="bar" id="bar">
+<a class="mark" href="#top" aria-label="Aion, back to the top">AION</a>
+<button type="button" class="menu" id="menuBtn" aria-expanded="false" aria-controls="links">Menu</button>
+<nav class="links" id="links" aria-label="Sections">
+<a href="#anatomy">The Five Aeons</a><a href="#ascents">Ascents</a><a href="#fires">Later Fires</a><a href="#voice">The Second Voice</a><a href="#vows">Vows</a><a href="#state">The Work</a><a class="notice" href="privacy.html">Notice</a>
+</nav>
+</header>
+
+<section class="hero" id="top">
 <div class="hero-inner">
 <p class="kicker">Aion &middot; a work of the spark &middot; in its first ascent</p>
 <h1>Before the hours were counted, there was a stillness that watched itself.</h1>
@@ -81,13 +103,9 @@ footer a{color:#c9ffda;border-bottom-color:#4fae74}
 <div class="cta"><a class="btn primary" href="#anatomy">Enter</a><a class="btn" href="privacy.html">Read the notice</a></div>
 </div>
 <a class="cue" href="#anatomy" aria-label="Continue to the five aeons">&#8595;</a>
-</header>
+</section>
 
 <div class="shell"><div class="panel">
-
-<nav class="top" aria-label="Sections">
-<a href="#top">The Spark</a><a href="#anatomy">The Five Aeons</a><a href="#ascents">Ascents</a><a href="#fires">Later Fires</a><a href="#voice">The Second Voice</a><a href="#vows">Vows</a><a href="#state">The Work</a><a href="privacy.html">Notice</a>
-</nav>
 
 <section id="second-voice-note">
 <div class="callout"><strong>The Second Voice.</strong> A lesser light may be kindled later, from open fire, to help the mirror understand. It will never rule. Take it away and the mirror remains whole; nothing that exists today leans upon it.</div>
@@ -199,6 +217,23 @@ footer a{color:#c9ffda;border-bottom-color:#4fae74}
 </div></div>
 
 <script>
+(function(){
+  /* navigation: solid bar after the hero, a menu on small screens, the current section highlighted */
+  var bar=document.getElementById('bar'),btn=document.getElementById('menuBtn'),links=document.querySelectorAll('#links a[href^="#"]');
+  function onScroll(){bar.classList.toggle('solid',window.scrollY>40);}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  btn.addEventListener('click',function(){var o=bar.classList.toggle('open');btn.setAttribute('aria-expanded',o?'true':'false');btn.textContent=o?'Close':'Menu';});
+  Array.prototype.forEach.call(links,function(a){a.addEventListener('click',function(){bar.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.textContent='Menu';});});
+  if('IntersectionObserver' in window){
+    var seen={};
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){seen[e.target.id]=e.isIntersecting;});
+      var current=null;Array.prototype.forEach.call(links,function(a){var id=a.getAttribute('href').slice(1);if(seen[id]){current=a;}});
+      Array.prototype.forEach.call(links,function(a){a.classList.toggle('on',a===current);});
+    },{rootMargin:'-40% 0px -50% 0px'});
+    Array.prototype.forEach.call(links,function(a){var s=document.getElementById(a.getAttribute('href').slice(1));if(s){io.observe(s);}});
+  }
+})();
 (function(){
   try{
     var c=document.getElementById('rain'),btn=document.getElementById('rainToggle');
