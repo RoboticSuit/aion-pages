@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aion</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/app/app.css?v=36">
+</head>
+<body>
+<header>
+  <h1>AION:\TRINITY</h1>
+  <span class="sub" id="tabLabel">Today</span>
+</header>
+<nav id="tabs" class="icon-tabs">
+  <button type="button" data-tab="today" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg>
+    <span>Today</span>
+  </button>
+  <button type="button" data-tab="schedule">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Schedule</span>
+  </button>
+  <button type="button" data-tab="tasks">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span>Deadlines</span>
+  </button>
+  <button type="button" data-tab="habits">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+    <span>Habits</span>
+  </button>
+  <button type="button" data-tab="config">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <span>Config</span>
+  </button>
+</nav>
+<div id="subnav" class="chips" hidden></div>
+<div id="status">Loading...</div>
+
+<section id="screen-today">
+  <div id="today-view"></div>
+</section>
+
+<section id="screen-tasks" hidden>
+  <ul id="tasks"></ul>
+  <div id="empty" hidden>Nothing open. All clear.</div>
+</section>
+
+<section id="screen-deadlines" hidden>
+  <div id="deadline-form"></div>
+</section>
+
+<section id="screen-events" hidden>
+  <ul id="events"></ul>
+  <div id="events-empty" hidden>Nothing coming up.</div>
+  <div id="event-form" hidden></div>
+</section>
+
+<section id="screen-routines" hidden>
+  <ul id="routines"></ul>
+  <div id="routines-empty" hidden>No repeating items found.</div>
+  <div id="routine-form" hidden></div>
+</section>
+
+<section id="screen-lectures" hidden>
+  <ul id="lectures"></ul>
+  <div id="lectures-empty" hidden>No lectures today.</div>
+  <div id="lecture-form" hidden></div>
+</section>
+
+<section id="screen-courses" hidden>
+  <ul id="courses"></ul>
+  <div id="courses-empty" hidden>No courses yet.</div>
+  <div id="course-form" hidden></div>
+</section>
+
+<section id="screen-habits" hidden>
+  <div id="habit-bar" class="chips"></div>
+  <ul id="habits"></ul>
+  <div id="habits-empty" hidden>No habits added through Aion yet.</div>
+  <div id="habit-form" hidden></div>
+</section>
+
+<section id="screen-home" hidden>
+  <div id="home-rows"></div>
+</section>
+
+<section id="screen-stats" hidden>
+  <div id="stats-views" class="chips"></div>
+  <div id="stats-body"></div>
+</section>
+
+<section id="screen-config" hidden>
+  <div id="config-form"></div>
+</section>
+
+<footer>Live data, real writes. Every action is read back.</footer>
+<script src="/app/app.js?v=35"></script>
+<script src="/app/screens/today.js?v=34"></script>
+<script src="/app/screens/tasks.js?v=34"></script>
+<script src="/app/screens/deadlines.js?v=34"></script>
+<script src="/app/screens/events.js?v=38"></script>
+<script src="/app/screens/routines.js?v=34"></script>
+<script src="/app/screens/lectures.js?v=35"></script>
+<script src="/app/screens/courses.js?v=34"></script>
+<script src="/app/screens/habits.js?v=36"></script>
+<script src="/app/screens/home.js?v=34"></script>
+<script src="/app/screens/stats.js?v=35"></script>
+<script src="/app/screens/config.js?v=37"></script>
+</body>
+</html>
